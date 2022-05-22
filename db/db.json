@@ -1,0 +1,325 @@
+{
+  "rights": [
+    {
+      "id": 1001,
+      "pagepermission": 1,
+      "title": "首页",
+      "key": "/home",
+      "grade": 1
+    },
+    {
+      "id": 1002,
+      "pagepermission": 1,
+      "title": "用户管理",
+      "key": "/user-manage",
+      "grade": 1
+    },
+    {
+      "id": 1003,
+      "pagepermission": 1,
+      "title": "权限管理",
+      "key": "/right-manage",
+      "grade": 1
+    },
+    {
+      "id": 1005,
+      "pagepermission": 1,
+      "title": "新闻管理",
+      "key": "/news-manage",
+      "grade": 1
+    },
+    {
+      "id": 1006,
+      "pagepermission": 1,
+      "title": "审核管理",
+      "key": "/verify-manage",
+      "grade": 1
+    },
+    {
+      "id": 1007,
+      "pagepermission": 1,
+      "title": "发布管理",
+      "key": "/publish-manage",
+      "grade": 1
+    }
+  ],
+  "children": [
+    {
+      "id": 2001,
+      "pagepermission": 1,
+      "title": "用户列表",
+      "key": "/user-manage/list",
+      "grade": 2,
+      "rightId": 1002
+    },
+    {
+      "id": 2003,
+      "title": "添加用户",
+      "key": "/user-manage/add",
+      "grade": 2,
+      "rightId": 1002
+    },
+    {
+      "id": 2005,
+      "title": "修改用户",
+      "key": "/user-manage/update",
+      "grade": 2,
+      "rightId": 1002
+    },
+    {
+      "id": 2004,
+      "title": "删除用户",
+      "key": "/user-manage/delete",
+      "grade": 2,
+      "rightId": 1002
+    },
+    {
+      "id": 2006,
+      "pagepermission": 1,
+      "title": "角色列表",
+      "key": "/right-manage/role-list",
+      "grade": 2,
+      "rightId": 1003
+    },
+    {
+      "id": 2002,
+      "pagepermission": 1,
+      "title": "权限列表",
+      "key": "/right-manage/right-list",
+      "grade": 2,
+      "rightId": 1003
+    },
+    {
+      "id": 2007,
+      "pagepermission": 1,
+      "title": "撰写新闻",
+      "key": "/news-manage/write",
+      "grade": 2,
+      "rightId": 1005
+    },
+    {
+      "id": 2008,
+      "pagepermission": 1,
+      "title": "草稿箱",
+      "key": "/news-manage/draft",
+      "grade": 2,
+      "rightId": 1005
+    },
+    {
+      "id": 2009,
+      "pagepermission": 1,
+      "title": "新闻分类",
+      "key": "/news-manage/category",
+      "grade": 2,
+      "rightId": 1005
+    },
+    {
+      "id": 2010,
+      "pagepermission": 1,
+      "title": "审核新闻",
+      "key": "/verify-manage/news",
+      "grade": 2,
+      "rightId": 1006
+    },
+    {
+      "id": 2011,
+      "pagepermission": 1,
+      "title": "审核列表",
+      "key": "/verify-manage/list",
+      "grade": 2,
+      "rightId": 1006
+    },
+    {
+      "id": 2014,
+      "pagepermission": 1,
+      "title": "待发布",
+      "key": "/publish-manage/before",
+      "grade": 2,
+      "rightId": 1007
+    },
+    {
+      "id": 2012,
+      "pagepermission": 1,
+      "title": "已发布",
+      "key": "/publish-manage/done",
+      "grade": 2,
+      "rightId": 1007
+    },
+    {
+      "id": 2013,
+      "pagepermission": 1,
+      "title": "已下线",
+      "key": "/publish-manage/removed",
+      "grade": 2,
+      "rightId": 1007
+    }
+  ],
+  "roles": [
+    {
+      "id": 1001,
+      "roleName": "超级管理员",
+      "roleType": 1,
+      "rights": [
+        "/user-manage",
+        "/user-manage/add",
+        "/user-manage/update",
+        "/user-manage/delete",
+        "/user-manage/list",
+        "/right-manage",
+        "/right-manage/role-list",
+        "/right-manage/right-list",
+        "/right-manage/role-update",
+        "/right-manage/role-delete",
+        "/right-manage/right-update",
+        "/right-manage/right-delete",
+        "/news-manage",
+        "/news-manage/list",
+        "/news-manage/add",
+        "/news-manage/update/:id",
+        "/news-manage/preview/:id",
+        "/news-manage/draft",
+        "/news-manage/category",
+        "/verify-manage",
+        "/verify-manage/list",
+        "/verify-manage/news",
+        "/publish-manage",
+        "/publish-manage/before",
+        "/publish-manage/done",
+        "/publish-manage/removed",
+        "/home"
+      ]
+    },
+    {
+      "id": 1002,
+      "roleName": "区域管理员",
+      "roleType": 2,
+      "rights": [
+        "/right-manage/role-update",
+        "/right-manage/role-delete",
+        "/right-manage/right-update",
+        "/right-manage/right-delete",
+        "/news-manage",
+        "/news-manage/list",
+        "/news-manage/add",
+        "/news-manage/update/:id",
+        "/news-manage/preview/:id",
+        "/news-manage/draft",
+        "/news-manage/category",
+        "/verify-manage",
+        "/verify-manage/list",
+        "/verify-manage/news",
+        "/publish-manage",
+        "/publish-manage/before",
+        "/publish-manage/done",
+        "/publish-manage/removed",
+        "/home",
+        "/news-manage/write"
+      ]
+    },
+    {
+      "id": 1003,
+      "roleName": "区域编辑",
+      "roleType": 3,
+      "rights": [
+        "/news-manage",
+        "/news-manage/list",
+        "/news-manage/add",
+        "/news-manage/update/:id",
+        "/news-manage/preview/:id",
+        "/news-manage/draft",
+        "/news-manage/category",
+        "/verify-manage",
+        "/verify-manage/list",
+        "/publish-manage",
+        "/publish-manage/before",
+        "/publish-manage/done",
+        "/publish-manage/removed",
+        "/home",
+        "/news-manage/write"
+      ]
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "username": "admin",
+      "password": "123456",
+      "roleState": true,
+      "default": true,
+      "region": "",
+      "roleId": 1001
+    },
+    {
+      "id": 2,
+      "username": "铁锤",
+      "password": "123",
+      "roleState": false,
+      "default": false,
+      "region": "亚洲",
+      "roleId": 1002
+    },
+    {
+      "username": "test3",
+      "password": "test3",
+      "roleId": 1003,
+      "region": "北美洲",
+      "id": 65745,
+      "default": false,
+      "roleState": false
+    },
+    {
+      "username": "test001",
+      "password": "test001",
+      "roleId": 1001,
+      "region": "非洲",
+      "id": 30524,
+      "default": false,
+      "roleState": true
+    },
+    {
+      "username": "test004",
+      "password": "test004",
+      "roleId": 1002,
+      "region": "南美洲",
+      "id": 1519,
+      "default": false,
+      "roleState": true
+    },
+    {
+      "username": "test005",
+      "password": "test005",
+      "roleId": 1003,
+      "region": "南美洲",
+      "id": 89314,
+      "default": false,
+      "roleState": false
+    }
+  ],
+  "regions": [
+    {
+      "id": 1,
+      "title": "亚洲",
+      "value": "亚洲"
+    },
+    {
+      "id": 2,
+      "title": "欧洲",
+      "value": "欧洲"
+    },
+    {
+      "id": 3,
+      "title": "北美洲",
+      "value": "北美洲"
+    },
+    {
+      "id": 4,
+      "title": "南美洲",
+      "value": "南美洲"
+    },
+    {
+      "id": 5,
+      "title": "非洲",
+      "value": "非洲"
+    }
+  ]
+}
