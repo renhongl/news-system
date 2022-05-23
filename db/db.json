@@ -114,6 +114,22 @@
       "rightId": 1005
     },
     {
+      "id": 2019,
+      "title": "新闻预览",
+      "key": "/news-manage/preview/:id",
+      "grade": 2,
+      "rightId": 1005,
+      "routerpermission": 1
+    },
+    {
+      "id": 2020,
+      "title": "新闻更新",
+      "key": "/news-manage/update/:id",
+      "grade": 2,
+      "rightId": 1005,
+      "routerpermission": 1
+    },
+    {
       "id": 2010,
       "pagepermission": 1,
       "title": "审核新闻",
@@ -186,7 +202,8 @@
         "/publish-manage/before",
         "/publish-manage/done",
         "/publish-manage/removed",
-        "/home"
+        "/home",
+        "/news-manage/write"
       ]
     },
     {
@@ -213,7 +230,12 @@
         "/publish-manage/done",
         "/publish-manage/removed",
         "/home",
-        "/news-manage/write"
+        "/news-manage/write",
+        "/user-manage",
+        "/user-manage/list",
+        "/user-manage/add",
+        "/user-manage/update",
+        "/user-manage/delete"
       ]
     },
     {
@@ -251,48 +273,30 @@
     },
     {
       "id": 2,
-      "username": "铁锤",
+      "username": "亚洲管理员",
       "password": "123",
-      "roleState": false,
+      "roleState": true,
       "default": false,
       "region": "亚洲",
       "roleId": 1002
     },
     {
-      "username": "test3",
-      "password": "test3",
+      "username": "亚洲编辑",
+      "password": "123",
       "roleId": 1003,
-      "region": "北美洲",
-      "id": 65745,
-      "default": false,
-      "roleState": false
-    },
-    {
-      "username": "test001",
-      "password": "test001",
-      "roleId": 1001,
-      "region": "非洲",
-      "id": 30524,
+      "region": "亚洲",
+      "id": 13794,
       "default": false,
       "roleState": true
     },
     {
-      "username": "test004",
-      "password": "test004",
-      "roleId": 1002,
-      "region": "南美洲",
-      "id": 1519,
+      "username": "亚洲编辑2",
+      "password": "123",
+      "roleId": 1003,
+      "region": "亚洲",
+      "id": 85143,
       "default": false,
       "roleState": true
-    },
-    {
-      "username": "test005",
-      "password": "test005",
-      "roleId": 1003,
-      "region": "南美洲",
-      "id": 89314,
-      "default": false,
-      "roleState": false
     }
   ],
   "regions": [
@@ -320,6 +324,195 @@
       "id": 5,
       "title": "非洲",
       "value": "非洲"
+    }
+  ],
+  "categories": [
+    {
+      "id": 1,
+      "title": "时事新闻",
+      "value": "时事新闻"
+    },
+    {
+      "id": 2,
+      "title": "环球经济",
+      "value": "环球经济"
+    },
+    {
+      "id": 3,
+      "title": "科学技术",
+      "value": "科学技术"
+    },
+    {
+      "id": 4,
+      "title": "数据结构",
+      "value": "数据结构"
+    }
+  ],
+  "news": [
+    {
+      "title": "打发打发",
+      "categoryId": 2,
+      "content": "<p>打发手动阀</p>\n",
+      "region": "亚洲",
+      "author": "test002",
+      "roleId": 1002,
+      "verifyState": 3,
+      "publishState": 2,
+      "createTime": 1653306585703,
+      "start": 0,
+      "view": 0,
+      "publishTime": 0,
+      "id": 13
+    },
+    {
+      "title": "更好的给对方",
+      "categoryId": 2,
+      "content": "<p>广东省分公司分公司</p>\n",
+      "region": "北美洲",
+      "author": "test003",
+      "roleId": 1002,
+      "verifyState": 2,
+      "publishState": 1,
+      "createTime": 1653306605902,
+      "start": 0,
+      "view": 0,
+      "publishTime": 0,
+      "id": 14
+    },
+    {
+      "title": "aaa",
+      "categoryId": 2,
+      "content": "<p>aaa</p>\n",
+      "region": "亚洲",
+      "author": "test002",
+      "roleId": 1002,
+      "verifyState": 2,
+      "publishState": 0,
+      "createTime": 1653309441621,
+      "start": 0,
+      "view": 0,
+      "publishTime": 0,
+      "id": 15
+    },
+    {
+      "title": "bbb",
+      "categoryId": 3,
+      "content": "<p>bbb</p>\n",
+      "region": "亚洲",
+      "author": "test002",
+      "roleId": 1002,
+      "verifyState": 2,
+      "publishState": 0,
+      "createTime": 1653309449914,
+      "start": 0,
+      "view": 0,
+      "publishTime": 0,
+      "id": 16
+    },
+    {
+      "title": "vvv",
+      "categoryId": 2,
+      "content": "<p>vvv</p>\n",
+      "region": "亚洲",
+      "author": "test005",
+      "roleId": 1003,
+      "verifyState": 2,
+      "publishState": 0,
+      "createTime": 1653309838171,
+      "start": 0,
+      "view": 0,
+      "publishTime": 0,
+      "id": 17
+    },
+    {
+      "title": "nnn",
+      "categoryId": 3,
+      "content": "<p>nnn</p>\n",
+      "region": "亚洲",
+      "author": "test005",
+      "roleId": 1003,
+      "verifyState": 2,
+      "publishState": 0,
+      "createTime": 1653309845737,
+      "start": 0,
+      "view": 0,
+      "publishTime": 0,
+      "id": 18
+    },
+    {
+      "title": "fffddfas",
+      "categoryId": 2,
+      "content": "<p>fffddfas</p>\n",
+      "region": "亚洲",
+      "author": "test002",
+      "roleId": 1002,
+      "verifyState": 3,
+      "publishState": 0,
+      "createTime": 1653310240680,
+      "start": 0,
+      "view": 0,
+      "publishTime": 0,
+      "id": 19
+    },
+    {
+      "title": "dfasdfas",
+      "categoryId": 2,
+      "content": "<p>fasdfasd</p>\n",
+      "region": "亚洲",
+      "author": "test002",
+      "roleId": 1002,
+      "verifyState": 3,
+      "publishState": 0,
+      "createTime": 1653310264343,
+      "start": 0,
+      "view": 0,
+      "publishTime": 0,
+      "id": 20
+    },
+    {
+      "title": "dfadfa",
+      "categoryId": 2,
+      "content": "<p>fasdfasd</p>\n",
+      "region": "亚洲",
+      "author": "test005",
+      "roleId": 1003,
+      "verifyState": 2,
+      "publishState": 0,
+      "createTime": 1653310307429,
+      "start": 0,
+      "view": 0,
+      "publishTime": 0,
+      "id": 21
+    },
+    {
+      "title": "fsadfasd",
+      "categoryId": 3,
+      "content": "<p>fasdfasdfasd</p>\n",
+      "region": "亚洲",
+      "author": "test005",
+      "roleId": 1003,
+      "verifyState": 2,
+      "publishState": 0,
+      "createTime": 1653310313559,
+      "start": 0,
+      "view": 0,
+      "publishTime": 0,
+      "id": 22
+    },
+    {
+      "title": "第一篇新闻",
+      "categoryId": 3,
+      "content": "<h2>第一篇新闻</h2>\n<p></p>\n<p>this is a big idea for test a df ffjalds  d afjl</p>\n",
+      "region": "亚洲",
+      "author": "亚洲编辑",
+      "roleId": 1003,
+      "verifyState": 1,
+      "publishState": 0,
+      "createTime": 1653312965760,
+      "start": 0,
+      "view": 0,
+      "publishTime": 0,
+      "id": 23
     }
   ]
 }

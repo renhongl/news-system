@@ -1,7 +1,8 @@
 import React from 'react'
+import DraftList from '../../components/DraftList'
 
 export default function Draft() {
   return (
-    <div>Draft</div>
+   <DraftList></DraftList>
   )
 }

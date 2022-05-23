@@ -7,20 +7,29 @@ import {
   SmileOutlined,
   UserOutlined
 } from '@ant-design/icons';
+import { useNavigate } from 'react-router-dom'
 
 const { Header } = Layout;
 
-export default function index({ collapsed, toggle }) {
+export default function Index({ collapsed, toggle }) {
+
+  const navigate = useNavigate()
+  const token = JSON.parse(localStorage.getItem('token'))
+  const roleName = token.role.roleName
 
   const menu = (
     <Menu
       items={[
         {
-          label: '超级管理员',
+          label: roleName,
         },
         {
           danger: true,
           label: '退出',
+          onClick: () => {
+            localStorage.removeItem('token')
+            navigate('/auth/signin', { replace: true })
+          }
         },
       ]}
     />
@@ -33,8 +42,8 @@ export default function index({ collapsed, toggle }) {
         onClick: toggle,
       })}
       <div>
-        <span style={{marginRight: '10px'}}>
-          欢迎admin回来
+        <span style={{ marginRight: '10px' }}>
+          欢迎<span style={{color: '#1890ff', margin: '0 4px'}}>{token.username}</span>回来
         </span>
         <span>
           <Dropdown overlay={menu}>

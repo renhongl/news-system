@@ -18,7 +18,7 @@ export default function Index() {
 
     const handleOk = () => {
         setIsModalVisible(false);
-        axios.patch(`http://localhost:5000/roles/${current.id}`, {
+        axios.patch(`/roles/${current.id}`, {
             rights: current.rights
         }).then(result => {
             openNotification('bottomRight', result.status)
@@ -53,9 +53,9 @@ export default function Index() {
             title: '你确定要删除吗？',
             icon: <ExclamationCircleOutlined />,
             content: '',
-            okText: 'Yes',
+            okText: '是',
             okType: 'danger',
-            cancelText: 'No',
+            cancelText: '否',
             onOk() {
                 deleteItem(item.id)
             },
@@ -67,20 +67,20 @@ export default function Index() {
 
     const deleteItem = (id) => {
         setRoleList(roleList.filter(item => item.id !== id))
-        axios.delete(`http://localhost:5000/roles/${id}`).then(result => {
+        axios.delete(`/roles/${id}`).then(result => {
             console.log(result.status)
             openNotification('bottomRight', result.status)
         })
     }
 
     useEffect(() => {
-        axios.get('http://localhost:5000/roles').then(result => {
+        axios.get('/roles').then(result => {
             setRoleList(result.data)
         })
     }, [])
 
     useEffect(() => {
-        axios.get('http://localhost:5000/rights?_embed=children').then(result => {
+        axios.get('/rights?_embed=children').then(result => {
             setRightList(result.data)
         })
     }, [])
@@ -120,7 +120,10 @@ export default function Index() {
 
     return (
         <section>
-            <Modal title="权限分配" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+            <Modal 
+            okText="保存"
+            cancelText="取消"
+            title="权限分配" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
                 <Tree
                     checkable
                     checkedKeys={current && current.rights}

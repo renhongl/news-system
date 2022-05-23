@@ -1,7 +1,9 @@
 import React from 'react'
+import PublishedComp from '../../components/Published'
+
 
 export default function Published() {
   return (
-    <div>Published</div>
+    <PublishedComp></PublishedComp>
   )
 }

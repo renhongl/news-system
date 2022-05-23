@@ -23,9 +23,9 @@ export default function Index() {
             title: '你确定要删除吗？',
             icon: <ExclamationCircleOutlined />,
             content: '',
-            okText: 'Yes',
+            okText: '是',
             okType: 'danger',
-            cancelText: 'No',
+            cancelText: '否',
             onOk() {
                 deleteRight(item)
             },
@@ -46,7 +46,7 @@ export default function Index() {
 
     const deleteParent = (id) => {
         setData(data.filter(item => item.id !== id))
-        axios.delete(`http://localhost:5000/rights/${id}`).then(result => {
+        axios.delete(`/rights/${id}`).then(result => {
             console.log(result.status)
             openNotification('bottomRight', result.status)
         })
@@ -64,14 +64,14 @@ export default function Index() {
             }
             return item
         }))
-        axios.delete(`http://localhost:5000/children/${id}`).then(result => {
+        axios.delete(`/children/${id}`).then(result => {
             console.log(result.status)
             openNotification('bottomRight', result.status)
         })
     }
 
     useEffect(() => {
-        axios.get('http://localhost:5000/rights?_embed=children').then(result => {
+        axios.get('/rights?_embed=children').then(result => {
             const data = result.data
             data.forEach(item => {
                 if (item.children && item.children.length === 0) {
@@ -111,7 +111,7 @@ export default function Index() {
                 }
                 return parent
             }))
-            axios.patch(`http://localhost:5000/children/${id}`, { pagepermission: newPermission }).then(result => {
+            axios.patch(`/children/${id}`, { pagepermission: newPermission }).then(result => {
                 openNotification('bottomRight', result.status, '修改页面配置')
             })
         }
@@ -129,7 +129,7 @@ export default function Index() {
                 return newItem
             }
         }))
-        axios.patch(`http://localhost:5000/rights/${id}`, { pagepermission: newPermission }).then(result => {
+        axios.patch(`/rights/${id}`, { pagepermission: newPermission }).then(result => {
             openNotification('bottomRight', result.status, '修改页面配置')
         })
     }

@@ -1,15 +1,25 @@
-import React, { useState } from 'react'
-import { Outlet } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import { Outlet, useLocation } from 'react-router-dom'
 import { Layout } from 'antd';
 import './style.scss'
 import SideBar from '../../components/SideBar'
 import TopHeader from '../../components/TopHeader'
+import NProgress from 'nprogress'
+import 'nprogress/nprogress.css'
 
 const { Content } = Layout;
 
 export default function Mgmt() {
 
+  NProgress.start()
+
   const [collapsed, setCollapsed] = useState(false)
+  const location = useLocation()
+
+  useEffect(() => {
+    console.log('done')
+    NProgress.done()
+  }, [location])
 
   const toggle = () => {
     setCollapsed(!collapsed)
@@ -26,6 +36,7 @@ export default function Mgmt() {
             margin: '24px 16px',
             padding: 24,
             minHeight: 280,
+            overflow: 'auto'
           }}
         >
           <Outlet></Outlet>

@@ -1,23 +1,61 @@
-import React from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { Form, Modal, Input, Select } from 'antd'
+import { CheckCircleOutlined } from '@ant-design/icons';
 
 const { Option } = Select;
 
 export default function Index({ visible, onCreate, onCancel, regionList, roleList, current }) {
-    const [form] = Form.useForm();
+    const [form] = Form.useForm()
+    const [isGlobal, setIsGlobal] = useState(false)
+    const { roleId, region } = JSON.parse(localStorage.getItem('token'))
+
+    const checkRegion = useCallback((item) => {
+        if (roleId === 1001 ) {
+            return false
+        } else {
+            return item.value !== region
+        }
+    })
+
+    const checkRole = useCallback((item) => {
+        if (roleId === 1001 ) {
+            return false
+        } else {
+            return item.roleType !== 3
+        }
+    })
+
+    const onChangeRole = useCallback(() => {
+        if (form.getFieldsValue().roleId === 1001) {
+            setIsGlobal(true)
+            form.setFieldsValue({
+                region: ''
+            })
+        } else {
+            setIsGlobal(false)
+        }
+    }, [form])
+
+    useEffect(() => {
+        if (current) {
+            form.setFieldsValue(current)
+            onChangeRole()
+        }
+    }, [current, form, onChangeRole])
+
     return (
         <Modal
             visible={visible}
-            title="添加用户"
-            okText="Create"
-            cancelText="Cancel"
+            title={current ? "修改用户" : "添加用户"}
+            okText="保存"
+            cancelText="取消"
             onCancel={onCancel}
             onOk={() => {
                 form
                     .validateFields()
                     .then((values) => {
                         form.resetFields();
-                        onCreate(values);
+                        onCreate(values, current);
                     })
                     .catch((info) => {
                         console.log('Validate Failed:', info);
@@ -42,7 +80,7 @@ export default function Index({ visible, onCreate, onCancel, regionList, roleLis
                         },
                     ]}
                 >
-                    <Input value={current ? current.username : ''}/>
+                    <Input />
                 </Form.Item>
 
                 <Form.Item
@@ -55,7 +93,7 @@ export default function Index({ visible, onCreate, onCancel, regionList, roleLis
                         },
                     ]}
                 >
-                    <Input value={current ? current.password : ''}/>
+                    <Input />
                 </Form.Item>
 
                 <Form.Item
@@ -71,10 +109,13 @@ export default function Index({ visible, onCreate, onCancel, regionList, roleLis
                     <Select
                         placeholder=""
                         allowClear
-                        value={current ? current.roleId : ''}
+                        onChange={() => {
+                            onChangeRole()
+                        }}
+
                     >
                         {
-                            roleList.map(item => <Option key={item.id} value={item.id}>{item.roleName}</Option>)
+                            roleList.map(item => <Option disabled={checkRole(item)} key={item.id} value={item.id}>{item.roleName}</Option>)
                         }
                     </Select>
                 </Form.Item>
@@ -84,18 +125,19 @@ export default function Index({ visible, onCreate, onCancel, regionList, roleLis
                     label="区域"
                     rules={[
                         {
-                            required: true,
+                            required: !isGlobal,
                             message: '请输入区域!',
                         },
                     ]}
                 >
                     <Select
                         placeholder=""
+                        disabled={isGlobal}
                         allowClear
-                        value={current ? current.region : ''}
+
                     >
                         {
-                            regionList.map(item => <Option key={item.value} value={item.value}>{item.title}</Option>)
+                            regionList.map(item => <Option disabled={checkRegion(item)} key={item.value} value={item.value}>{item.title}</Option>)
                         }
                     </Select>
                 </Form.Item>

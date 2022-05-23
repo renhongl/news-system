@@ -14,6 +14,7 @@ export default function Index() {
     const [roleList, setRoleList] = useState([])
     const [visible, setVisible] = useState(false)
     const [current, setCurrent] = useState(null)
+    const { roleId, username, region } = JSON.parse(localStorage.getItem('token'))
 
     const openNotification = (placement, message, title = '删除权限') => {
         notification.info({
@@ -23,18 +24,25 @@ export default function Index() {
         });
     };
 
-    const onCreate = (values) => {
+    const onCreate = (values, current) => {
         console.log('Received values of form: ', values);
-        const user = {
-            ...values,
-            id: Math.floor(Math.random() * 100000),
-            default: false,
-            roleState: true,
+        if (!!current) {
+            axios.patch(`/users/${current.id}`, values).then(result => {
+                openNotification('bottomRight', result.status, '修改用户')
+                refreshUserList()
+            })
+        } else {
+            const user = {
+                ...values,
+                id: Math.floor(Math.random() * 100000),
+                default: false,
+                roleState: true,
+            }
+            axios.post('/users', user).then(result => {
+                openNotification('bottomRight', result.status, '添加用户')
+                refreshUserList()
+            })
         }
-        axios.post('http://localhost:5000/users', user).then(result => {
-            openNotification('bottomRight', result.status, '添加用户')
-            refreshUserList()
-        })
         setVisible(false);
     };
 
@@ -43,27 +51,31 @@ export default function Index() {
     }, [])
 
     useEffect(() => {
-        axios.get('http://localhost:5000/regions').then(result => {
+        axios.get('/regions').then(result => {
             setRegionList(result.data)
         })
     }, [])
 
     useEffect(() => {
-        axios.get('http://localhost:5000/roles').then(result => {
+        axios.get('/roles').then(result => {
             setRoleList(result.data)
         })
     }, [])
 
     const deleteItem = (id) => {
-        axios.delete(`http://localhost:5000/users/${id}`).then(result => {
+        axios.delete(`/users/${id}`).then(result => {
             openNotification('bottomRight', result.status, '删除用户')
             refreshUserList()
         })
     }
 
     const refreshUserList = () => {
-        axios.get('http://localhost:5000/users?_expand=role').then(result => {
-            setUserList(result.data)
+        axios.get('/users?_expand=role').then(result => {
+            const data = result.data
+            setUserList(roleId === 1001 ? data : [
+                ...data.filter(item => item.username === username),
+                ...data.filter(item => item.region === region && item.role.roleType === 3)
+            ])
         })
     }
 
@@ -77,7 +89,7 @@ export default function Index() {
             }
             return item
         }))
-        axios.patch(`http://localhost:5000/users/${data.id}`, {
+        axios.patch(`/users/${data.id}`, {
             roleState: !data.roleState
         }).then(result => {
             openNotification('bottomRight', result.status, '更新用户')
@@ -89,9 +101,9 @@ export default function Index() {
             title: '你确定要删除吗？',
             icon: <ExclamationCircleOutlined />,
             content: '',
-            okText: 'Yes',
+            okText: '是',
             okType: 'danger',
-            cancelText: 'No',
+            cancelText: '否',
             onOk() {
                 deleteItem(item.id)
             },
@@ -105,8 +117,20 @@ export default function Index() {
         {
             title: '区域',
             dataIndex: 'region',
+            filters: [{
+                text: '全球',
+                value: '',
+            }, ...regionList.map(item => {
+                return {
+                    text: item.title,
+                    value: item.value
+                }
+            })],
+            onFilter: (value, item) => {
+                return item.region === value
+            },
             render: (region) => {
-                return region ? region : '全球'
+                return <b>{region ? region : '全球'}</b>
             }
         },
         {
@@ -131,7 +155,7 @@ export default function Index() {
             title: '操作',
             render: (item) => {
                 return <div>
-                    <Button onClick={() => {setVisible(true); setCurrent(item)}} disabled={item.default} type="primary" shape="circle" icon={<EditOutlined />} />
+                    <Button onClick={() => { setVisible(true); setCurrent(item) }} disabled={item.default} type="primary" shape="circle" icon={<EditOutlined />} />
                     <Button onClick={() => showDeleteConfirm(item)} disabled={item.default} style={{ marginLeft: '10px' }} type="danger" shape="circle" icon={<DeleteOutlined />} />
                 </div>
             }

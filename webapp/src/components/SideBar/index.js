@@ -16,6 +16,8 @@ export default function Index({ collapsed }) {
 
   const navigate = useNavigate()
   const location = useLocation()
+  const token = JSON.parse(localStorage.getItem('token'))
+  const rights = token.role.rights
 
   const [items, setItems] = useState([])
   const iconMapping = {
@@ -38,13 +40,12 @@ export default function Index({ collapsed }) {
       } else {
         delete item.children
       }
-      return item.pagepermission === 1;
+      return item.pagepermission === 1 && rights.includes(item.key.replace('/mgmt', ''));
     })
   }
 
   useEffect(() => {
-    // axios.get('https://my-json-server.typicode.com/renhongl/news-system-api/rights?_embed=children').then(result => {
-      axios.get('http://localhost:5000/rights?_embed=children').then(result => {
+      axios.get('/rights?_embed=children').then(result => {
       const data = filterItems(result.data)
       setItems(data)
     })
@@ -57,7 +58,7 @@ export default function Index({ collapsed }) {
 
   return (
     <Sider trigger={null} collapsible collapsed={collapsed}>
-      <div className="logo">全球新闻发布系统</div>
+      <div className="logo">前端小站管理系统</div>
       {items?.length > 0 && <Menu
         theme="dark"
         mode="inline"
