@@ -9,15 +9,18 @@ import {
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios'
 import './style.scss'
-
+import { useDispatch } from 'react-redux'
+import { changeTitle } from '../TopHeader/slice';
+import { useSelector } from 'react-redux';
 const { Sider } = Layout;
 
 export default function Index({ collapsed }) {
 
   const navigate = useNavigate()
   const location = useLocation()
-  const token = JSON.parse(localStorage.getItem('token'))
+  const token = useSelector(state => state.signin.token)
   const rights = token.role.rights
+  const dispatch = useDispatch()
 
   const [items, setItems] = useState([])
   const iconMapping = {
@@ -51,8 +54,24 @@ export default function Index({ collapsed }) {
     })
   }, [])
 
+  const getTitle = (key, items) => {
+    for(let item of items) {
+      if (item.key === key) {
+        return item
+      }
+      if (item.children) {
+        const data = getTitle(key, item.children)
+        if (data) {
+          return data
+        }
+      }
+    }
+    return null
+  }
 
   const handClick = (item) => {
+    const data = getTitle(item.key, items)
+    dispatch(changeTitle(data.title))
     navigate(item.key, { replace: true })
   }
 

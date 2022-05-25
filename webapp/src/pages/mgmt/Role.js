@@ -1,5 +1,5 @@
 import React from 'react'
-import RoleList from '../../components/RoleList'
+import RoleList from '../../components/mgmt/RoleList'
 
 export default function Role() {
   return (

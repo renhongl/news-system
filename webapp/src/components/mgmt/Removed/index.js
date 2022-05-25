@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { Table, Button, notification } from 'antd'
-import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
-
+import { EditOutlined, DeleteOutlined} from '@ant-design/icons'
+import { useSelector } from 'react-redux';
 export default function Index() {
 
     const [data, setData] = useState([])
-    const { username } = JSON.parse(localStorage.getItem('token'))
+    const { username } = useSelector(state => state.signin.token)
 
     const openNotification = (placement, message, title = '删除权限') => {
         notification.info({
@@ -18,7 +18,7 @@ export default function Index() {
 
     const columns = [
         {
-            title: '新闻标题',
+            title: '文章标题',
             dataIndex: 'title',
         },
         {
@@ -26,30 +26,28 @@ export default function Index() {
             dataIndex: 'author',
         },
         {
-            title: '新闻分类',
+            title: '文章分类',
             dataIndex: 'category',
         },
         {
             title: '操作',
             render: (item) => {
                 return <div>
-                    <Button onClick={() => handleRemove(item)} type="primary">下线</Button>
+                    <Button onClick={() => handleDelete(item)} type="primary">删除</Button>
                 </div>
             }
         }
     ]
 
-    const handleRemove = (item) => {
-        axios.patch(`/news/${item.id}`, {
-            publishState: 3
-        }).then(res => {
-            openNotification('bottomRight', res.status, '下线文章')
+    const handleDelete = (item) => {
+        axios.delete(`/news/${item.id}`).then(res => {
+            openNotification('bottomRight', res.status, '删除文章')
             loadData()
         })
     }
 
     const loadData = () => {
-        axios.get(`/news?author=${username}&publishState=2`).then(res => {
+        axios.get(`/news?author=${username}&publishState=3`).then(res => {
             setData(res.data)
         })
     }

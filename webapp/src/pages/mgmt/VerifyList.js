@@ -1,5 +1,5 @@
 import React from 'react'
-import VerifyListComp from '../../components/VerifyList'
+import VerifyListComp from '../../components/mgmt/VerifyList'
 
 export default function VerifyList() {
   return (

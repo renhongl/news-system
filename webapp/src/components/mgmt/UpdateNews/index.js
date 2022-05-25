@@ -9,7 +9,7 @@ import PreviewNews from '../PreviewNews'
 import { useNavigate, useParams } from 'react-router-dom'
 import draftToHtml from 'draftjs-to-html';
 import htmlToDraft from 'html-to-draftjs';
-
+import { useSelector } from 'react-redux';
 const md = new MarkdownIt();
 
 const { Step } = Steps
@@ -23,7 +23,7 @@ export default function Index() {
     const [news, setNews] = useState(null)
     const [content, setContent] = useState(EditorState.createEmpty())
     const [markdown, setMarkdown] = useState('')
-    const token = JSON.parse(localStorage.getItem('token'))
+    const token = useSelector(state => state.signin.token)
     const navigate = useNavigate()
     const { id } = useParams()
 
@@ -43,7 +43,7 @@ export default function Index() {
         })
     }, [])
 
-    const openNotification = (placement, message, title = '保存新闻') => {
+    const openNotification = (placement, message, title = '保存文章') => {
         notification.info({
             message: title,
             description: message,
@@ -77,12 +77,12 @@ export default function Index() {
                 autoComplete="off"
             >
                 <Form.Item
-                    label="新闻标题"
+                    label="文章标题"
                     name="title"
                     rules={[
                         {
                             required: true,
-                            message: '请输入新闻标题!',
+                            message: '请输入文章标题!',
                         },
                     ]}
                 >
@@ -90,12 +90,12 @@ export default function Index() {
                 </Form.Item>
 
                 <Form.Item
-                    label="新闻分类"
+                    label="文章分类"
                     name="categoryId"
                     rules={[
                         {
                             required: true,
-                            message: '请输入新闻分类!',
+                            message: '请输入文章分类!',
                         },
                     ]}
                 >
@@ -132,7 +132,7 @@ export default function Index() {
             });
         } else if (current === 1) {
             if (!markdown) {
-                message.error('新闻内容不能为空')
+                message.error('文章内容不能为空')
             } else {
                 setCurrent(current + 1)
             }

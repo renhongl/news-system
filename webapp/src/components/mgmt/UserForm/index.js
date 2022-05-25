@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { Form, Modal, Input, Select } from 'antd'
 import { CheckCircleOutlined } from '@ant-design/icons';
-
+import { useSelector } from 'react-redux';
 const { Option } = Select;
 
 export default function Index({ visible, onCreate, onCancel, regionList, roleList, current }) {
     const [form] = Form.useForm()
     const [isGlobal, setIsGlobal] = useState(false)
-    const { roleId, region } = JSON.parse(localStorage.getItem('token'))
+    const { roleId, region } = useSelector(state => state.signin.token)
 
     const checkRegion = useCallback((item) => {
         if (roleId === 1001 ) {

@@ -1,14 +1,12 @@
 import React from 'react'
-import { Route, Navigate } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
+import NotFoundPage from '../pages/notFound/NotFound'
 
-// import NotFound from '../pages/notFound/NotFound'
-
-const NotFound = React.lazy(() => import('../pages/notFound/NotFound'))
-
-export default (
-    <Route path="/">
-        <Route path='/' element={<Navigate to='/app' />} />
-        <Route path='*' element={<NotFound />} />
-    </Route>
-)
+export default function NotFound() {
+    return (
+        <Routes>
+            <Route path='*' element={<NotFoundPage />} />
+        </Routes>
+    )
+}
 

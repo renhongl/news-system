@@ -3,11 +3,11 @@ import { Table, Button, Modal, notification } from 'antd'
 import axios from 'axios'
 import { EditOutlined, DeleteOutlined, VerticalAlignTopOutlined, ExclamationCircleOutlined } from '@ant-design/icons'
 import { useNavigate } from 'react-router-dom';
-
+import { useSelector } from 'react-redux';
 const { confirm } = Modal;
 
 export default function Index() {
-    const { username } = JSON.parse(localStorage.getItem('token'))
+    const { username } = useSelector(state => state.signin.token)
     const [draftList, setDraftList] = useState([])
     const navigate = useNavigate()
 
@@ -25,7 +25,7 @@ export default function Index() {
             dataIndex: 'id'
         },
         {
-            title: '新闻标题',
+            title: '文章标题',
             render: (item) => {
                 return <a href={`#/mgmt/news-manage/preview/${item.id}`}>{item.title}</a>
             }
@@ -35,7 +35,7 @@ export default function Index() {
             dataIndex: 'author',
         },
         {
-            title: '新闻分类',
+            title: '文章分类',
             dataIndex: 'category',
             render: (item) => {
                 return item.title
@@ -45,9 +45,25 @@ export default function Index() {
             title: '操作',
             render: (item) => {
                 return <div>
-                    <Button onClick={() => {navigate(`/mgmt/news-manage/update/${item.id}`)}} type="basic" shape="circle" icon={<EditOutlined />} />
-                    <Button onClick={() => showVerifyConfirm(item)} style={{ marginLeft: '10px' }} type="primary" shape="circle" icon={<VerticalAlignTopOutlined />} />
-                    <Button onClick={() => showDeleteConfirm(item)} style={{ marginLeft: '10px' }} type="danger" shape="circle" icon={<DeleteOutlined />} />
+                    <Button
+                        onClick={() => { navigate(`/mgmt/news-manage/update/${item.id}`) }}
+                        type="basic"
+                        shape="circle"
+                        icon={<EditOutlined />}
+                    />
+                    <Button
+                        onClick={() => showVerifyConfirm(item)}
+                        style={{ marginLeft: '10px' }}
+                        type="primary"
+                        shape="circle"
+                        icon={<VerticalAlignTopOutlined />}
+                    />
+                    <Button
+                        onClick={() => showDeleteConfirm(item)}
+                        style={{ marginLeft: '10px' }}
+                        type="danger"
+                        shape="circle" icon={<DeleteOutlined />}
+                    />
                 </div>
             }
         },
@@ -87,7 +103,7 @@ export default function Index() {
         });
     }
 
-    const verifyItem = (id) =>{
+    const verifyItem = (id) => {
         axios.patch(`/news/${id}`, {
             verifyState: 1
         }).then(result => {

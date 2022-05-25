@@ -1,23 +1,42 @@
-import React, { useCallback } from 'react'
+import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Form, Input, Checkbox, Button, message } from 'antd'
 import axios from 'axios'
+import { useDispatch, useSelector } from 'react-redux'
+import { signinAsync } from './signinSlice'
 
 export default function SignIn() {
 
   const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const token = useSelector((state) => state.signin.token)
+  const loading = useSelector((state) => state.signin.loading)
+
+  useEffect(() => {
+    // if (loading === 'rejected') {
+    //   message.error('用户名与密码不匹配')
+    // } else if (loading === 'done') {
+    //   message.error('登陆成功，正在跳转')
+      
+    // }
+    if (token) {
+      navigate('/mgmt/home', { replace: true })
+    }
+  }, [token])
+  
 
   const onFinish = (values) => {
     console.log('Success:', values);
-    axios.get(`http://localhost:5000/users?username=${values.username}&password=${values.password}&roleState=true&_expand=role`).then(res => {
-      console.log(res.data)
-      if (res.data.length === 0) {
-        message.error('用户名与密码不匹配')
-      } else {
-        localStorage.setItem('token', JSON.stringify(res.data[0]))
-        navigate('/mgmt', { replace: true })
-      }
-    })
+    dispatch(signinAsync(values))
+    // axios.get(`/users?username=${values.username}&password=${values.password}&roleState=true&_expand=role`).then(res => {
+    //   console.log(res.data)
+    //   if (res.data.length === 0) {
+    //     message.error('用户名与密码不匹配')
+    //   } else {
+    //     localStorage.setItem('token', JSON.stringify(res.data[0]))
+    //     navigate('/mgmt/home', { replace: true })
+    //   }
+    // })
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -73,7 +92,7 @@ export default function SignIn() {
 
         <Form.Item
         >
-          <Button type="primary" htmlType="submit">
+          <Button loading={loading === 'loading'} type="primary" htmlType="submit">
             登录
           </Button>
         </Form.Item>

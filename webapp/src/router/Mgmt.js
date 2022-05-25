@@ -1,5 +1,7 @@
-import React from 'react'
-import { Navigate, Route } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import { Navigate, Route, Routes, useNavigate } from 'react-router-dom'
+import axios from 'axios'
+import { useSelector } from 'react-redux';
 
 
 import HomePage from '../pages/mgmt/Home'
@@ -23,8 +25,8 @@ import RightPage from '../pages/mgmt/Right'
 import UserPage from '../pages/mgmt/User'
 
 import MgmtLayout from '../layouts/mgmt/Mgmt'
-import AuthComponent from '../core/auth/Auth'
-import NotFound from './NotFound'
+
+import NotFoundPage from '../pages/notFound/NotFound'
 
 // const HomePage = React.lazy(() => import('../pages/mgmt/Home'))
 // const NewsPage = React.lazy(() => import('../pages/mgmt/News'))
@@ -59,33 +61,56 @@ const routerMapping = {
     "/publish-manage/removed": <RemovedPage />
 }
 
+export default function Mgmt() {
+    const [permission, setPermission] = useState([])
+    const [rights, setRights] = useState(null)
+    const navigate = useNavigate()
+    const token = useSelector(state => state.signin.token)
 
-const checkRoute = (item) => {
-    return routerMapping[item.key] && (item.pagepermission === 1 || item.routerpermission === 1)
-}
-
-const checkUser = (item, rights) => {
-    return rights.includes(item.key)
-}
-
-export default function (permission) {
-    const tokenStr = localStorage.getItem('token')
-    if (!tokenStr) {
-        return null
+    const checkRoute = (item) => {
+        return routerMapping[item.key] && (item.pagepermission === 1 || item.routerpermission === 1)
     }
 
-    const { role } = JSON.parse(tokenStr)
-    const { rights } = role
+    const checkUser = (item, rights) => {
+        return rights.includes(item.key)
+    }
+
+    useEffect(() => {
+        Promise.all([
+            axios.get('/rights'),
+            axios.get('/children'),
+        ]).then(res => {
+            const data = [...res[0].data, ...res[1].data]
+            setPermission(data)
+        })
+    }, [])
+
+    useEffect(() => {
+        if (!token) {
+            navigate('/auth/signin', {replace: true})
+        }
+        token && setRights(token.role.rights)
+    }, [token])
+
     return (
-        <Route path='/mgmt' element={<MgmtLayout />}>
-            <Route index element={<Navigate to='/mgmt/home' />}></Route>
+        <Routes>
             {
-                permission.map(item => {
-                    if (checkRoute(item) && checkUser(item, rights)) {
-                        return <Route key={item.key} path={'/mgmt' + item.key} element={<AuthComponent>{routerMapping[item.key]}</AuthComponent>}></Route>
+                permission && rights && <Route path='/mgmt' element={<MgmtLayout />}>
+                    <Route index element={<Navigate to='/mgmt/home' />}></Route>
+                    {
+                        permission.map(item => {
+                            if (checkRoute(item) && checkUser(item, rights)) {
+                                return <Route
+                                    key={item.key}
+                                    path={'/mgmt' + item.key}
+                                    element={routerMapping[item.key]}
+                                ></Route>
+                            }
+                        })
                     }
-                })
+                    <Route path='*' element={<NotFoundPage />} />
+                </Route>
             }
-        </Route>
+        </Routes>
     )
 }

@@ -6,5 +6,6 @@ export default function Auth({ children }) {
     // if (authStr) {
     //     const authObj = JSON.parse(authStr)
     // }
+    console.log(isAuth)
     return isAuth ? children : <Navigate to='/auth/signin' />
 }

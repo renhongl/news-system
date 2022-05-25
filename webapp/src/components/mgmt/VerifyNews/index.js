@@ -3,6 +3,7 @@ import { Table, Button, Modal, notification, Tag } from 'antd'
 import axios from 'axios'
 import { EditOutlined, DeleteOutlined, DownloadOutlined, ExclamationCircleOutlined } from '@ant-design/icons'
 import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux';
 const { confirm } = Modal;
 
 export default function Index() {
@@ -10,7 +11,7 @@ export default function Index() {
     const stateList = ['', '审核中', '已通过', '未通过']
     const colorState = ['', 'orange', 'green', 'red', 'blue']
     const navigate = useNavigate()
-    const { roleId, username, region } = JSON.parse(localStorage.getItem('token'))
+    const { roleId, username, region } = useSelector(state => state.signin.token)
 
     const openNotification = (placement, message, title = '删除权限') => {
         notification.info({
@@ -22,7 +23,7 @@ export default function Index() {
 
     const columns = [
         {
-            title: '新闻标题',
+            title: '文章标题',
             render: (item) => {
                 return <a href={`#/mgmt/news-manage/preview/${item.id}`}>{item.title}</a>
             }
@@ -32,7 +33,7 @@ export default function Index() {
             dataIndex: 'author',
         },
         {
-            title: '新闻分类',
+            title: '文章分类',
             dataIndex: 'category',
             render: (item) => {
                 return item.title

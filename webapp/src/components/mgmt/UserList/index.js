@@ -3,7 +3,7 @@ import { Table, Button, Switch, notification, Modal } from 'antd'
 import axios from 'axios'
 import { DeleteOutlined, EditOutlined, ExclamationCircleOutlined } from '@ant-design/icons'
 import UserForm from '../UserForm'
-
+import { useSelector } from 'react-redux';
 const { confirm } = Modal;
 
 
@@ -14,7 +14,7 @@ export default function Index() {
     const [roleList, setRoleList] = useState([])
     const [visible, setVisible] = useState(false)
     const [current, setCurrent] = useState(null)
-    const { roleId, username, region } = JSON.parse(localStorage.getItem('token'))
+    const { roleId, username, region } = useSelector(state => state.signin.token)
 
     const openNotification = (placement, message, title = '删除权限') => {
         notification.info({

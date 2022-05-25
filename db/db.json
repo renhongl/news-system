@@ -24,7 +24,7 @@
     {
       "id": 1005,
       "pagepermission": 1,
-      "title": "新闻管理",
+      "title": "文章管理",
       "key": "/news-manage",
       "grade": 1
     },
@@ -92,7 +92,7 @@
     {
       "id": 2007,
       "pagepermission": 1,
-      "title": "撰写新闻",
+      "title": "撰写文章",
       "key": "/news-manage/write",
       "grade": 2,
       "rightId": 1005
@@ -108,14 +108,14 @@
     {
       "id": 2009,
       "pagepermission": 1,
-      "title": "新闻分类",
+      "title": "文章分类",
       "key": "/news-manage/category",
       "grade": 2,
       "rightId": 1005
     },
     {
       "id": 2019,
-      "title": "新闻预览",
+      "title": "文章预览",
       "key": "/news-manage/preview/:id",
       "grade": 2,
       "rightId": 1005,
@@ -123,7 +123,7 @@
     },
     {
       "id": 2020,
-      "title": "新闻更新",
+      "title": "文章更新",
       "key": "/news-manage/update/:id",
       "grade": 2,
       "rightId": 1005,
@@ -132,7 +132,7 @@
     {
       "id": 2010,
       "pagepermission": 1,
-      "title": "审核新闻",
+      "title": "审核文章",
       "key": "/verify-manage/news",
       "grade": 2,
       "rightId": 1006
@@ -329,8 +329,8 @@
   "categories": [
     {
       "id": 1,
-      "title": "时事新闻",
-      "value": "时事新闻"
+      "title": "时事文章",
+      "value": "时事文章"
     },
     {
       "id": 2,
@@ -500,9 +500,9 @@
       "id": 22
     },
     {
-      "title": "第一篇新闻",
+      "title": "第一篇文章",
       "categoryId": 3,
-      "content": "<h2>第一篇新闻</h2>\n<p></p>\n<p>this is a big idea for test a df ffjalds  d afjl</p>\n",
+      "content": "<h2>第一篇文章</h2>\n<p></p>\n<p>this is a big idea for test a df ffjalds  d afjl</p>\n",
       "region": "亚洲",
       "author": "亚洲编辑",
       "roleId": 1003,
@@ -513,6 +513,36 @@
       "view": 0,
       "publishTime": 0,
       "id": 23
+    },
+    {
+      "title": "cehsi daljsd",
+      "categoryId": 2,
+      "content": "<p>adfasdf</p>\n",
+      "region": "亚洲",
+      "author": "亚洲编辑",
+      "roleId": 1003,
+      "verifyState": 1,
+      "publishState": 0,
+      "createTime": 1653364457880,
+      "start": 0,
+      "view": 0,
+      "publishTime": 0,
+      "id": 24
+    },
+    {
+      "title": "dfsafas",
+      "categoryId": 2,
+      "content": "<p>dfasdsa</p>\n",
+      "region": "亚洲",
+      "author": "亚洲编辑",
+      "roleId": 1003,
+      "verifyState": 0,
+      "publishState": 0,
+      "createTime": 1653391701668,
+      "start": 0,
+      "view": 0,
+      "publishTime": 0,
+      "id": 25
     }
   ]
 }

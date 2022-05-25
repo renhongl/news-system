@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { Table, Button, notification } from 'antd'
 import { EditOutlined, DeleteOutlined} from '@ant-design/icons'
-
+import { useSelector } from 'react-redux';
 export default function Index() {
 
     const [data, setData] = useState([])
-    const { username } = JSON.parse(localStorage.getItem('token'))
+    const { username } = useSelector(state => state.signin.token)
 
     const openNotification = (placement, message, title = '删除权限') => {
         notification.info({
@@ -18,7 +18,7 @@ export default function Index() {
 
     const columns = [
         {
-            title: '新闻标题',
+            title: '文章标题',
             dataIndex: 'title',
         },
         {
@@ -26,7 +26,7 @@ export default function Index() {
             dataIndex: 'author',
         },
         {
-            title: '新闻分类',
+            title: '文章分类',
             dataIndex: 'category',
         },
         {

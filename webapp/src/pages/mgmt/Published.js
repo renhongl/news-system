@@ -1,5 +1,5 @@
 import React from 'react'
-import PublishedComp from '../../components/Published'
+import PublishedComp from '../../components/mgmt/Published'
 
 
 export default function Published() {

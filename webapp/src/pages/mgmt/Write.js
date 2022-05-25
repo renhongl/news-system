@@ -1,5 +1,5 @@
 import React from 'react'
-import CreateNews from '../../components/CreateNews'
+import CreateNews from '../../components/mgmt/CreateNews'
 import { PageHeader } from 'antd'
 
 export default function Write() {

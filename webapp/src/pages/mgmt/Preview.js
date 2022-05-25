@@ -1,5 +1,5 @@
 import React from 'react'
-import NewsDetail from '../../components/NewsDetail'
+import NewsDetail from '../../components/mgmt/NewsDetail'
 
 export default function Preview() {
   return (
